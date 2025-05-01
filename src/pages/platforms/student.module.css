@@ -1,0 +1,362 @@
+.main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Hero Section */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
+.heroContent h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 1.5rem;
+}
+
+.heroContent p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.primaryButton {
+  padding: 0.875rem 2rem;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.primaryButton:hover {
+  background: var(--accent-hover);
+}
+
+.placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--theme-muted);
+  border-radius: 8px;
+}
+
+/* Characters Section */
+.characters {
+  margin: 4rem 0;
+  padding: 2rem;
+}
+
+.characterContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.characterGridContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.characterText {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.characterGrid {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.characterCircle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--theme-muted);
+}
+
+.featureText {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+/* Planets Section */
+.planets {
+  margin: 4rem 0;
+  text-align: center;
+}
+
+.planets h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 3rem;
+}
+
+.planetCarousel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding: 2rem 0;
+  min-height: 800px;
+}
+
+.planetCircles {
+  position: relative;
+  width: 800px;
+  height: 800px;
+  perspective: 1200px;
+}
+
+.windmill {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.planetCircle {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  margin: -75px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: 50% 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    var(--planet-color, var(--theme-foreground)) 0%,
+    color-mix(in srgb, var(--planet-color, var(--theme-foreground)) 70%, black)
+      50%,
+    color-mix(in srgb, var(--planet-color, var(--theme-foreground)) 40%, black)
+      100%
+  );
+  box-shadow: inset -10px -10px 20px rgba(0, 0, 0, 0.5),
+    inset 10px 10px 20px rgba(255, 255, 255, 0.2),
+    8px 8px 16px rgba(0, 0, 0, 0.3);
+  opacity: 0.7;
+  will-change: transform;
+}
+
+.planetCircle:hover {
+  opacity: 0.9;
+  transform: scale(1.1) translateZ(20px);
+}
+
+.planetCircle::before {
+  content: "";
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 30%;
+  height: 30%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.6) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  border-radius: 50%;
+  filter: blur(4px);
+  opacity: 0.8;
+}
+
+.planetCircle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+}
+
+.activePlanet {
+  opacity: 1;
+  transform: scale(1.2) translateZ(50px) !important;
+  box-shadow: inset -15px -15px 30px rgba(0, 0, 0, 0.6),
+    inset 15px 15px 30px rgba(255, 255, 255, 0.25),
+    12px 12px 24px rgba(0, 0, 0, 0.4), 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.carouselButton {
+  background: none;
+  border: none;
+  font-size: 3rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 1rem;
+  z-index: 20;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.carouselButton:hover {
+  color: var(--text-secondary);
+  transform: scale(1.1);
+}
+
+.planetName {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-top: 2rem;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.spinButton {
+  margin-top: 2rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--theme-muted);
+  color: var(--text-primary);
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.spinButton:hover {
+  background: var(--theme-foreground);
+}
+
+.spinButton.active {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+@media (max-width: 1024px) {
+  .planetCarousel {
+    min-height: 600px;
+  }
+
+  .planetCircles {
+    width: 600px;
+    height: 600px;
+  }
+
+  .planetCircle {
+    width: 120px;
+    height: 120px;
+    margin: -60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .planetCarousel {
+    min-height: 400px;
+  }
+
+  .planetCircles {
+    width: 400px;
+    height: 400px;
+  }
+
+  .planetCircle {
+    width: 100px;
+    height: 100px;
+    margin: -50px;
+  }
+}
+
+/* CTA Section */
+.cta {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: var(--theme-background);
+  border-radius: 8px;
+}
+
+.cta h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2rem;
+}
+
+.registerButton {
+  padding: 1rem 3rem;
+  background: var(--accent);
+  color: var(--accent-foreground);
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.registerButton:hover {
+  background: var(--accent-hover);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .heroContent {
+    text-align: center;
+  }
+
+  .characterGrid {
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+
+  .characterCircle {
+    width: 60px;
+    height: 60px;
+  }
+
+  .cta {
+    padding: 3rem 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    padding: 1rem;
+  }
+
+  .heroContent h1 {
+    font-size: 2rem;
+  }
+
+  .planetCircle {
+    width: 120px;
+    height: 120px;
+  }
+
+  .carouselButton {
+    width: 32px;
+    height: 32px;
+  }
+}
