@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import { supabase } from "global-comps/src/utils/supabaseClient";
+import { authApi } from "@/api/auth";
 import { FormInput } from "../shared/FormInput";
 import { UserPlatform, AuthFormData } from "../types/auth.types";
 import { validateLogin } from "../utils/authValidation";
@@ -32,32 +32,21 @@ export const LoginForm = ({ platform }: LoginFormProps) => {
     setLoading(true);
 
     try {
-      const { data, error: signInError } =
-        await supabase.auth.signInWithPassword({
-          email: formData.email,
-          password: formData.password,
-        });
+      const response = await authApi.login(formData);
 
-      if (signInError) throw signInError;
-
-      // Verify user role and approval status
-      const { data: userData, error: userError } = await supabase
-        .from("users")
-        .select("role, approved")
-        .eq("id", data.user?.id)
-        .single();
-
-      if (userError || !userData) {
-        throw new Error("Error retrieving user information");
+      if (!response.success) {
+        throw new Error(response.error);
       }
 
-      if (userData.role !== platform) {
+      const { role, approved } = response.data;
+
+      if (role !== platform) {
         throw new Error(
-          `This account is registered as a ${userData.role}, not a ${platform}`
+          `This account is registered as a ${role}, not a ${platform}`
         );
       }
 
-      if (platform === "teacher" && !userData.approved) {
+      if (platform === "teacher" && !approved) {
         throw new Error("Your teacher account is pending approval");
       }
 

@@ -1,4 +1,6 @@
+import Image from "next/image";
 import styles from "./AboutUsSection.module.css";
+import backgroundImage from "@/assets/backgrounds/background.jpg";
 
 export const AboutUsSection = () => {
   const teamMembers = [
@@ -30,6 +32,16 @@ export const AboutUsSection = () => {
 
   return (
     <section className={styles.aboutUs}>
+      <div className={styles.backgroundImage}>
+        <Image
+          src={backgroundImage}
+          alt="Background"
+          fill
+          priority
+          quality={100}
+          className={styles.image}
+        />
+      </div>
       <div className={styles.container}>
         <h1 className={styles.title}>About Us</h1>
 

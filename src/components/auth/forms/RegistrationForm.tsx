@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Link from "next/link";
-import { supabase } from "global-comps/src/utils/supabaseClient";
+import { supabase } from "@/utils/supabaseClient";
 import { FormInput } from "../shared/FormInput";
 import { UserPlatform, AuthFormData } from "../types/auth.types";
 import { validateRegistration } from "../utils/authValidation";

@@ -1,4 +1,6 @@
+import Image from "next/image";
 import styles from "./PricingSection.module.css";
+import backgroundImage from "@/assets/backgrounds/background.jpg";
 
 type PricingTier = {
   name: string;
@@ -41,23 +43,35 @@ export const PricingSection = () => {
 
   return (
     <section className={styles.pricing}>
-      <h2 className={styles.title}>Pricing</h2>
-      <p className={styles.subtitle}>Choose the plan that is right for you</p>
+      <div className={styles.backgroundImage}>
+        <Image
+          src={backgroundImage}
+          alt="Background"
+          fill
+          priority
+          quality={100}
+          className={styles.image}
+        />
+      </div>
+      <div className={styles.content}>
+        <h2 className={styles.title}>Pricing</h2>
+        <p className={styles.subtitle}>Choose the plan that is right for you</p>
 
-      <div className={styles.pricingGrid}>
-        {pricingTiers.map((tier) => (
-          <div key={tier.name} className={styles.pricingCard}>
-            <h3 className={styles.tierName}>{tier.name}</h3>
-            <div className={styles.priceContainer}>
-              <span className={styles.price}>{tier.price}</span>
-              {tier.period && (
-                <span className={styles.period}>{tier.period}</span>
-              )}
+        <div className={styles.pricingGrid}>
+          {pricingTiers.map((tier) => (
+            <div key={tier.name} className={styles.pricingCard}>
+              <h3 className={styles.tierName}>{tier.name}</h3>
+              <div className={styles.priceContainer}>
+                <span className={styles.price}>{tier.price}</span>
+                {tier.period && (
+                  <span className={styles.period}>{tier.period}</span>
+                )}
+              </div>
+              <p className={styles.description}>{tier.description}</p>
+              <button className={styles.getStarted}>Get started</button>
             </div>
-            <p className={styles.description}>{tier.description}</p>
-            <button className={styles.getStarted}>Get started</button>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

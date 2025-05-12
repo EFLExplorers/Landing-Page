@@ -1,0 +1,40 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+  padding: 2rem;
+  border: 1px solid var(--theme-gray-200);
+  border-radius: 0.5rem;
+}
+
+.section h2 {
+  margin-bottom: 1.5rem;
+  color: var(--theme-gray-900);
+}
+
+.buttonGroup {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.tooltipGroup {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.iconGroup {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.iconGroup svg {
+  color: var(--theme-primary);
+}

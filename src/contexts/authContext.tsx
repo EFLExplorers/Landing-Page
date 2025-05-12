@@ -1,46 +1,31 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { User } from "@supabase/supabase-js";
-import { supabase } from "global-comps/src/utils/supabaseClient";
+import { supabase } from "@/lib/supabase";
+import { apiClient } from "@/api/client";
 
 interface AuthContextType {
   user: User | null;
+  role: string | null;
+  approved: boolean | null;
   loading: boolean;
-  signOut: () => Promise<void>;
-  userRole: "student" | "teacher" | null;
+  login: (email: string, password: string) => Promise<void>;
+  register: (
+    email: string,
+    password: string,
+    userData: { firstName: string; lastName: string }
+  ) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<string | null>(null);
+  const [approved, setApproved] = useState<boolean | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userRole, setUserRole] = useState<"student" | "teacher" | null>(null);
 
   useEffect(() => {
-    // Check active session
-    const checkSession = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setUser(session?.user ?? null);
-
-      if (session?.user) {
-        // Fetch user role from database
-        const { data: userData } = await supabase
-          .from("users")
-          .select("role")
-          .eq("id", session.user.id)
-          .single();
-
-        setUserRole(userData?.role ?? null);
-      }
-
-      setLoading(false);
-    };
-
-    checkSession();
-
-    // Set up auth state listener
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -49,13 +34,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (session?.user) {
         const { data: userData } = await supabase
           .from("users")
-          .select("role")
+          .select("role, approved")
           .eq("id", session.user.id)
           .single();
 
-        setUserRole(userData?.role ?? null);
+        setRole(userData?.role ?? null);
+        setApproved(userData?.approved ?? null);
       } else {
-        setUserRole(null);
+        setRole(null);
+        setApproved(null);
       }
 
       setLoading(false);
@@ -66,13 +53,35 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
-  const signOut = async () => {
-    await supabase.auth.signOut();
-    window.location.href = "/";
+  const login = async (email: string, password: string) => {
+    const response = await apiClient.auth.login(email, password);
+    if (!response.success) {
+      throw new Error(response.error);
+    }
+  };
+
+  const register = async (
+    email: string,
+    password: string,
+    userData: { firstName: string; lastName: string }
+  ) => {
+    const response = await apiClient.auth.register(email, password, userData);
+    if (!response.success) {
+      throw new Error(response.error);
+    }
+  };
+
+  const logout = async () => {
+    const response = await apiClient.auth.logout();
+    if (!response.success) {
+      throw new Error(response.error);
+    }
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signOut, userRole }}>
+    <AuthContext.Provider
+      value={{ user, role, approved, loading, login, register, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

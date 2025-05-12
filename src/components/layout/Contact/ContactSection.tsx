@@ -1,6 +1,13 @@
 import { useState } from "react";
+import Image from "next/image";
 import styles from "./ContactSection.module.css";
-import { MdLocationOn, MdEmail, MdPhone, MdChevronRight } from "react-icons/md";
+import {
+  LocationIcon,
+  EmailIcon,
+  PhoneIcon,
+  ChevronRightIcon,
+} from "@/components/ui/icons";
+import backgroundImage from "@/assets/backgrounds/background.jpg";
 
 interface FAQ {
   question: string;
@@ -59,6 +66,16 @@ export const ContactSection = () => {
 
   return (
     <section className={styles.contact}>
+      <div className={styles.backgroundImage}>
+        <Image
+          src={backgroundImage}
+          alt="Background"
+          fill
+          priority
+          quality={100}
+          className={styles.image}
+        />
+      </div>
       <div className={styles.container}>
         <h1 className={styles.title}>Contact Us</h1>
 
@@ -72,17 +89,17 @@ export const ContactSection = () => {
             </p>
             <div className={styles.contactInfo}>
               <div className={styles.infoItem}>
-                <MdLocationOn className={styles.icon} />
+                <LocationIcon className={styles.icon} />
                 <span>123 Learning Street, Education City, EC 12345</span>
               </div>
               <div className={styles.infoItem}>
-                <MdEmail className={styles.icon} />
+                <EmailIcon className={styles.icon} />
                 <a href="mailto:contact@eslexplorers.com">
                   contact@eslexplorers.com
                 </a>
               </div>
               <div className={styles.infoItem}>
-                <MdPhone className={styles.icon} />
+                <PhoneIcon className={styles.icon} />
                 <a href="tel:+1234567890">+1 (234) 567-890</a>
               </div>
             </div>
@@ -150,7 +167,7 @@ export const ContactSection = () => {
               >
                 <div className={styles.faqQuestion}>
                   <span>{faq.question}</span>
-                  <MdChevronRight className={styles.faqArrow} />
+                  <ChevronRightIcon className={styles.faqArrow} />
                 </div>
                 {activeQuestion === index && (
                   <div className={styles.faqAnswer}>{faq.answer}</div>

@@ -1,4 +1,6 @@
+import Image from "next/image";
 import styles from "./LearningToolsSection.module.css";
+import backgroundImage from "@/assets/backgrounds/background.jpg";
 
 export const LearningToolsSection = () => {
   const tools = [
@@ -42,6 +44,16 @@ export const LearningToolsSection = () => {
 
   return (
     <section className={styles.tools}>
+      <div className={styles.backgroundImage}>
+        <Image
+          src={backgroundImage}
+          alt="Background"
+          fill
+          priority
+          quality={100}
+          className={styles.image}
+        />
+      </div>
       <div className={styles.content}>
         <h2 className={styles.title}>Learning Tools</h2>
         <p className={styles.subtitle}>

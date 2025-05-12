@@ -1,48 +1,43 @@
 import Link from "next/link";
-import { ChevronDown } from "lucide-react";
+import {
+  LocationIcon,
+  EmailIcon,
+  PhoneIcon,
+  ChevronRightIcon,
+} from "@/components/ui/icons";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-  DropdownMenuPortal,
-} from "../../ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import styles from "./Navbar.module.css";
 
 export const Navbar = () => {
   return (
-    <nav className={styles.desktopNav}>
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger className={styles.navLink}>
-          Platforms <ChevronDown className={styles.dropdownIcon} />
-        </DropdownMenuTrigger>
-        <DropdownMenuPortal>
-          <DropdownMenuContent
-            className={styles.dropdownContent}
-            sideOffset={8}
-          >
-            <DropdownMenuItem className={styles.dropdownItem}>
-              <Link href="/platforms/teacher" className={styles.dropdownLink}>
-                Teacher
-              </Link>
+    <nav className={styles.navbar}>
+      <div className={styles.logo}>
+        <Link href="/">EFL Explorers</Link>
+      </div>
+      <div className={styles.links}>
+        <Link href="/about">About</Link>
+        <Link href="/courses">Courses</Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger className={styles.dropdownTrigger}>
+            Resources
+            <ChevronRightIcon className={styles.dropdownIcon} />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem>
+              <Link href="/resources/teachers">For Teachers</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem className={styles.dropdownItem}>
-              <Link href="/platforms/student" className={styles.dropdownLink}>
-                Student
-              </Link>
+            <DropdownMenuItem>
+              <Link href="/resources/students">For Students</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
-        </DropdownMenuPortal>
-      </DropdownMenu>
-      <Link href="/pricing" className={styles.navLink}>
-        Pricing
-      </Link>
-      <Link href="/about" className={styles.navLink}>
-        About
-      </Link>
-      <Link href="/contact" className={styles.navLink}>
-        Contact
-      </Link>
+        </DropdownMenu>
+        <Link href="/contact">Contact</Link>
+      </div>
     </nav>
   );
 };

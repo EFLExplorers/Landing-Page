@@ -1,1 +1,4 @@
-export const logoPath = "/assets/logo/Logo.png";
+import Logo from "./Logo.png";
+import LogoDark from "./Logo-dark.png";
+
+export { Logo, LogoDark };
