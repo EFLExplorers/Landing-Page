@@ -1,72 +1,43 @@
-import Image from "next/image";
-import styles from "./LearningToolsSection.module.css";
-import backgroundImage from "@/assets/backgrounds/background.jpg";
+import { FC } from "react";
 
-export const LearningToolsSection = () => {
+export const LearningToolsSection: FC = () => {
   const tools = [
     {
-      title: "Interactive Games",
+      title: "Interactive Lessons",
       description:
-        "Engage with our collection of fun, educational games that make learning English enjoyable and effective.",
-      icon: "🎮",
-    },
-    {
-      title: "Digital Flashcards",
-      description:
-        "Master vocabulary and grammar with our interactive flashcard system that adapts to your learning progress.",
-      icon: "🎴",
+        "Engage with dynamic content designed to make learning fun and effective",
+      icon: "📚",
     },
     {
       title: "Progress Tracking",
       description:
-        "Monitor your learning journey with detailed analytics and personalized learning paths.",
+        "Monitor your improvement with detailed analytics and feedback",
       icon: "📊",
     },
     {
       title: "Practice Exercises",
-      description:
-        "Reinforce your learning with a variety of exercises designed to improve your English skills.",
+      description: "Reinforce your learning with targeted practice activities",
       icon: "✍️",
-    },
-    {
-      title: "Audio Resources",
-      description:
-        "Improve your pronunciation and listening skills with our comprehensive audio library.",
-      icon: "🎧",
-    },
-    {
-      title: "Video Lessons",
-      description:
-        "Learn through engaging video content that brings English to life in real-world contexts.",
-      icon: "🎥",
     },
   ];
 
   return (
-    <section className={styles.tools}>
-      <div className={styles.backgroundImage}>
-        <Image
-          src={backgroundImage}
-          alt="Background"
-          fill
-          priority
-          quality={100}
-          className={styles.image}
-        />
-      </div>
-      <div className={styles.content}>
-        <h2 className={styles.title}>Learning Tools</h2>
-        <p className={styles.subtitle}>
-          Discover our comprehensive suite of tools designed to make learning
-          English engaging and effective
-        </p>
-
-        <div className={styles.toolsGrid}>
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 className="text-3xl sm:text-4xl font-bold text-center text-gray-900 mb-12">
+          Our Learning Tools
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {tools.map((tool, index) => (
-            <div key={index} className={styles.toolCard}>
-              <div className={styles.toolIcon}>{tool.icon}</div>
-              <h3 className={styles.toolTitle}>{tool.title}</h3>
-              <p className={styles.toolDescription}>{tool.description}</p>
+            <div
+              key={index}
+              className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow"
+            >
+              <div className="text-4xl mb-4">{tool.icon}</div>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                {tool.title}
+              </h3>
+              <p className="text-gray-600">{tool.description}</p>
             </div>
           ))}
         </div>
@@ -74,5 +45,3 @@ export const LearningToolsSection = () => {
     </section>
   );
 };
-
-export default LearningToolsSection;

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { authApi } from "@/api/auth";
+import { supabase } from "@/utils/supabaseClient";
 import { FormInput } from "../shared/FormInput";
 import { UserPlatform, AuthFormData } from "../types/auth.types";
 import { validateLogin } from "../utils/authValidation";

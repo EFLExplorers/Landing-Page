@@ -5,5 +5,11 @@ interface PageLayoutProps {
 }
 
 export const PageLayout = ({ children }: PageLayoutProps) => {
-  return <div className="w-full">{children}</div>;
+  return (
+    <div className="min-h-screen bg-white">
+      <main className="flex flex-col">
+        {children}
+      </main>
+    </div>
+  );
 };

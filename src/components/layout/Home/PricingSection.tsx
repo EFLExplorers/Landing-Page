@@ -1,74 +1,105 @@
-import Image from "next/image";
-import styles from "./PricingSection.module.css";
-import backgroundImage from "@/assets/backgrounds/background.jpg";
+import { FC } from "react";
 
-type PricingTier = {
-  name: string;
-  price: string;
-  period: string;
-  description: string;
-};
-
-export const PricingSection = () => {
-  const pricingTiers: PricingTier[] = [
+export const PricingSection: FC = () => {
+  const pricingTiers = [
     {
-      name: "Free Access",
+      name: "Basic",
       price: "Free",
-      period: "",
-      description:
-        "Free access to basic features and content to help you get started.",
+      description: "Perfect for getting started",
+      features: [
+        "Access to basic lessons",
+        "Limited practice exercises",
+        "Community forum access",
+        "Basic progress tracking",
+      ],
     },
     {
-      name: "Individual",
-      price: "$20",
-      period: "/MO",
-      description:
-        "Access to all features and content, perfect for individual learners.",
+      name: "Pro",
+      price: "$19.99",
+      period: "/month",
+      description: "Best for serious learners",
+      features: [
+        "All Basic features",
+        "Unlimited practice exercises",
+        "Personalized feedback",
+        "Advanced progress tracking",
+        "Priority support",
+      ],
+      highlighted: true,
     },
     {
-      name: "Teacher",
-      price: "$25",
-      period: "/MO",
-      description:
-        "Complete access with additional teaching tools and resources.",
-    },
-    {
-      name: "School",
-      price: "$15",
-      period: "/MO",
-      description:
-        "Bulk pricing for schools, includes all features and management tools.",
+      name: "Premium",
+      price: "$49.99",
+      period: "/month",
+      description: "For dedicated language enthusiasts",
+      features: [
+        "All Pro features",
+        "One-on-one tutoring",
+        "Custom learning path",
+        "Group classes access",
+        "Premium content library",
+      ],
     },
   ];
 
   return (
-    <section className={styles.pricing}>
-      <div className={styles.backgroundImage}>
-        <Image
-          src={backgroundImage}
-          alt="Background"
-          fill
-          priority
-          quality={100}
-          className={styles.image}
-        />
-      </div>
-      <div className={styles.content}>
-        <h2 className={styles.title}>Pricing</h2>
-        <p className={styles.subtitle}>Choose the plan that is right for you</p>
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+            Choose Your Learning Plan
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Select the perfect plan that matches your learning goals and budget
+          </p>
+        </div>
 
-        <div className={styles.pricingGrid}>
-          {pricingTiers.map((tier) => (
-            <div key={tier.name} className={styles.pricingCard}>
-              <h3 className={styles.tierName}>{tier.name}</h3>
-              <div className={styles.priceContainer}>
-                <span className={styles.price}>{tier.price}</span>
-                {tier.period && (
-                  <span className={styles.period}>{tier.period}</span>
-                )}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {pricingTiers.map((tier, index) => (
+            <div
+              key={index}
+              className={`bg-white rounded-xl p-8 ${
+                tier.highlighted
+                  ? "ring-2 ring-blue-600 shadow-xl"
+                  : "shadow-lg"
+              }`}
+            >
+              <div className="text-center">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  {tier.name}
+                </h3>
+                <div className="flex items-baseline justify-center mb-4">
+                  <span className="text-4xl font-bold text-gray-900">
+                    {tier.price}
+                  </span>
+                  {tier.period && (
+                    <span className="text-gray-600 ml-1">{tier.period}</span>
+                  )}
+                </div>
+                <p className="text-gray-600 mb-6">{tier.description}</p>
               </div>
-              <p className={styles.description}>{tier.description}</p>
-              <button className={styles.getStarted}>Get started</button>
+
+              <ul className="space-y-4">
+                {tier.features.map((feature, featureIndex) => (
+                  <li
+                    key={featureIndex}
+                    className="flex items-center text-gray-700"
+                  >
+                    <span className="mr-2 text-blue-600">✓</span>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              <button
+                className={`w-full mt-8 px-6 py-3 rounded-lg font-semibold transition-colors ${
+                  tier.highlighted
+                    ? "bg-blue-600 text-white hover:bg-blue-700"
+                    : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                }`}
+              >
+                Get Started
+              </button>
             </div>
           ))}
         </div>
@@ -76,5 +107,3 @@ export const PricingSection = () => {
     </section>
   );
 };
-
-export default PricingSection;

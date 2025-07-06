@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { ContactSection } from "../components/layout/Contact/ContactSection";
+import { ContactSection } from "../components/layout/";
 
 export const ContactPage: NextPage = () => {
   return (

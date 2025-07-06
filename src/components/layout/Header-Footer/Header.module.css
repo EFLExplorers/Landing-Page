@@ -3,19 +3,27 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: var(--theme-accent);
+  background: rgba(10, 10, 42, 0.8);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(168, 178, 255, 0.1);
   z-index: 1000;
-  padding: var(--spacing-lg) var(--spacing-xl);
-  border-bottom: 1px solid var(--theme-accent);
-  height: var(--header-height);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  padding: 1rem 2rem;
+  height: 80px;
+  transition: all 0.3s ease;
+}
+
+.header:hover {
+  background: rgba(10, 10, 42, 0.9);
 }
 
 .container {
+  max-width: 1400px;
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 100%;
 }
 
 .logo {
@@ -29,55 +37,75 @@
 
 .nav {
   display: flex;
-  gap: var(--spacing-lg);
+  gap: 2rem;
   align-items: center;
 }
 
 .navLink {
   text-decoration: none;
-  color: var(--text-inverse);
+  color: #fff;
   opacity: 0.8;
-  font-size: var(--button-font-size);
-  transition: var(--transition-colors);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navLink::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #4a90e2, #8a2be2);
+  transition: width 0.3s ease;
 }
 
 .navLink:hover {
   opacity: 1;
 }
 
+.navLink:hover::after {
+  width: 100%;
+}
+
 .authButtons {
   display: flex;
-  gap: var(--spacing-md);
+  gap: 1rem;
+  align-items: center;
 }
 
 .registerButton,
 .loginButton {
-  padding: var(--button-padding-y) var(--button-padding-x);
-  border-radius: var(--radius-full);
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
   text-decoration: none;
-  font-size: var(--button-font-size);
-  transition: var(--button-transition);
+  font-size: 1rem;
+  transition: all 0.3s ease;
 }
 
 .registerButton {
-  background-color: var(--theme-accent);
-  color: var(--text-inverse);
+  background: linear-gradient(45deg, #4a90e2, #8a2be2);
+  color: white;
   border: none;
 }
 
 .registerButton:hover {
-  background-color: var(--theme-accent-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.4);
 }
 
 .loginButton {
-  background-color: transparent;
-  color: var(--text-inverse);
-  border: 1px solid var(--text-inverse);
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   opacity: 0.8;
 }
 
 .loginButton:hover {
   opacity: 1;
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
 }
 
 .desktopAuthButtons {
@@ -97,12 +125,12 @@
 
 /* Mobile Components */
 .mobileMenuButton {
-  display: block;
+  display: none;
   background: none;
   border: none;
   cursor: pointer;
-  padding: var(--spacing-sm);
-  color: var(--text-inverse);
+  padding: 0.5rem;
+  color: white;
 }
 
 /* Group related styles */
@@ -114,40 +142,40 @@
 
 /* Mobile Menu */
 .mobileMenu {
+  display: none;
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
-  background-color: var(--theme-background);
-  border-bottom: 1px solid var(--theme-accent);
-  box-shadow: var(--shadow-lg);
+  background: rgba(10, 10, 42, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(168, 178, 255, 0.1);
+  padding: 1rem;
 }
 
 .mobileNav {
   display: flex;
   flex-direction: column;
-  padding: var(--spacing-md) var(--spacing-lg);
+  gap: 1rem;
 }
 
 .mobileNavLink {
-  padding: var(--spacing-md) 0;
+  padding: 0.75rem 0;
   text-decoration: none;
-  color: var(--text-inverse);
+  color: white;
   opacity: 0.8;
   font-size: 1rem;
-  border-bottom: 1px solid var(--theme-accent);
-  background: none;
+  transition: all 0.3s ease;
   border: none;
+  background: none;
   text-align: left;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: var(--transition-colors);
 }
 
 .mobileNavLink:hover {
   opacity: 1;
+  color: #a8b2ff;
 }
 
 .mobileDropdownIcon {
@@ -188,8 +216,10 @@
 .mobileAuthButtons {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-sm);
-  margin-top: var(--spacing-sm);
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(168, 178, 255, 0.1);
 }
 
 .mobileLoginButton {
@@ -225,10 +255,10 @@
   background-color: var(--theme-accent-hover);
 }
 
-/* Responsive Styles */
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
-  .container {
-    padding: 0 var(--spacing-md);
+  .header {
+    padding: 1rem;
   }
 
   .nav {
@@ -240,6 +270,10 @@
   }
 
   .mobileMenuButton {
+    display: block;
+  }
+
+  .mobileMenu.active {
     display: block;
   }
 }

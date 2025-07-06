@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { LoginForm } from "@/components/auth/LoginForm";
+import { LoginForm } from "@/components/auth/forms/LoginForm";
 import styles from "@/components/auth/styles/AuthForm.module.css";
 
 export const PlatformLoginPage = () => {

@@ -15,29 +15,34 @@ import styles from "./Navbar.module.css";
 
 export const Navbar = () => {
   return (
-    <nav className={styles.navbar}>
-      <div className={styles.logo}>
-        <Link href="/">EFL Explorers</Link>
-      </div>
-      <div className={styles.links}>
-        <Link href="/about">About</Link>
-        <Link href="/courses">Courses</Link>
-        <DropdownMenu>
-          <DropdownMenuTrigger className={styles.dropdownTrigger}>
-            Resources
-            <ChevronRightIcon className={styles.dropdownIcon} />
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Link href="/resources/teachers">For Teachers</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href="/resources/students">For Students</Link>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <Link href="/contact">Contact</Link>
-      </div>
+    <nav className={styles.nav}>
+      <Link href="/about" className={styles.navLink}>
+        About
+      </Link>
+      <Link href="/courses" className={styles.navLink}>
+        Courses
+      </Link>
+      <DropdownMenu>
+        <DropdownMenuTrigger className={styles.dropdownTrigger}>
+          Resources
+          <ChevronRightIcon className={styles.dropdownIcon} />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className={styles.dropdownContent}>
+          <DropdownMenuItem className={styles.dropdownItem}>
+            <Link href="/resources/teachers" className={styles.dropdownLink}>
+              For Teachers
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className={styles.dropdownItem}>
+            <Link href="/resources/students" className={styles.dropdownLink}>
+              For Students
+            </Link>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+      <Link href="/contact" className={styles.navLink}>
+        Contact
+      </Link>
     </nav>
   );
 };

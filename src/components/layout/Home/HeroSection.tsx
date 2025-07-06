@@ -1,50 +1,27 @@
-import { useRouter } from "next/router";
-import Image from "next/image";
-import styles from "./HeroSection.module.css";
-import backgroundImage from "@/assets/backgrounds/background.jpg";
+import { FC } from "react";
 
-export const HeroSection = () => {
-  const router = useRouter();
-
-  const handlePlatformSelect = (platform: "student" | "teacher") => {
-    router.push(`/register/${platform}`);
-  };
-
+export const HeroSection: FC = () => {
   return (
-    <section className={styles.hero}>
-      <div className={styles.backgroundImage}>
-        <Image
-          src={backgroundImage}
-          alt="Background"
-          fill
-          priority
-          quality={100}
-          className={styles.image}
-        />
-      </div>
-      <div className={styles.content}>
-        <h1 className={styles.title}>Start your learning journey today!</h1>
-        <p className={styles.subtitle}>
-          We&apos;re so happy you&apos;re here! However, you will need to
-          register to get started.
-        </p>
-        <div className={styles.buttonGroup}>
-          <button
-            onClick={() => handlePlatformSelect("student")}
-            className={styles.button}
-          >
-            Register Student
-          </button>
-          <button
-            onClick={() => handlePlatformSelect("teacher")}
-            className={styles.button}
-          >
-            Register Teacher
-          </button>
+    <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 mb-6">
+            Welcome to EFL Explorers
+          </h1>
+          <p className="text-xl sm:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+            Discover the joy of learning English through interactive and
+            engaging experiences
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+              Get Started
+            </button>
+            <button className="px-8 py-3 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
+              Learn More
+            </button>
+          </div>
         </div>
       </div>
     </section>
   );
 };
-
-export default HeroSection;

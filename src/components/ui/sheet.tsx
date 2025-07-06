@@ -1,107 +1,129 @@
 "use client";
 
 import * as React from "react";
-import * as SheetPrimitive from "@radix-ui/react-dialog";
-import { X } from "lucide-react";
-
 import { cn } from "@/lib/utils";
-import styles from "./sheet.module.css";
+import { CloseIcon } from "./icons/CloseIcon";
+import styles from "./styles/sheet.module.css";
 
-const Sheet = SheetPrimitive.Root;
-
-const SheetTrigger = SheetPrimitive.Trigger;
-
-const SheetClose = SheetPrimitive.Close;
-
-const SheetPortal = SheetPrimitive.Portal;
-
-const SheetOverlay = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Overlay
-    className={cn(styles.overlay, className)}
-    {...props}
-    ref={ref}
-  />
-));
-SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
-
-interface SheetContentProps
-  extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content> {
-  side?: "top" | "bottom" | "left" | "right";
+interface SheetProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
 }
 
-const SheetContent = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Content>,
-  SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      className={cn(styles.content, styles[`side-${side}`], className)}
-      {...props}
-    >
+interface SheetTriggerProps {
+  children: React.ReactNode;
+  asChild?: boolean;
+}
+
+interface SheetContentProps {
+  children: React.ReactNode;
+  side?: "top" | "right" | "bottom" | "left";
+  className?: string;
+}
+
+interface SheetHeaderProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+interface SheetFooterProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+interface SheetTitleProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+interface SheetDescriptionProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const Sheet = ({ open, onOpenChange, children }: SheetProps) => {
+  const [isOpen, setIsOpen] = React.useState(open ?? false);
+
+  React.useEffect(() => {
+    if (open !== undefined) {
+      setIsOpen(open);
+    }
+  }, [open]);
+
+  const handleOpenChange = (newOpen: boolean) => {
+    setIsOpen(newOpen);
+    onOpenChange?.(newOpen);
+  };
+
+  return (
+    <SheetContext.Provider value={{ isOpen, onOpenChange: handleOpenChange }}>
       {children}
-      <SheetPrimitive.Close className={styles.close}>
-        <X className={styles.closeIcon} />
-        <span className={styles.srOnly}>Close</span>
-      </SheetPrimitive.Close>
-    </SheetPrimitive.Content>
-  </SheetPortal>
-));
-SheetContent.displayName = SheetPrimitive.Content.displayName;
-
-const SheetHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles.header, className)} {...props} />
-);
-SheetHeader.displayName = "SheetHeader";
-
-const SheetFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles.footer, className)} {...props} />
-);
-SheetFooter.displayName = "SheetFooter";
-
-const SheetTitle = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Title
-    ref={ref}
-    className={cn(styles.title, className)}
-    {...props}
-  />
-));
-SheetTitle.displayName = SheetPrimitive.Title.displayName;
-
-const SheetDescription = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Description
-    ref={ref}
-    className={cn(styles.description, className)}
-    {...props}
-  />
-));
-SheetDescription.displayName = SheetPrimitive.Description.displayName;
-
-export {
-  Sheet,
-  SheetPortal,
-  SheetOverlay,
-  SheetTrigger,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetFooter,
-  SheetTitle,
-  SheetDescription,
+    </SheetContext.Provider>
+  );
 };
+
+const SheetContext = React.createContext<{
+  isOpen: boolean;
+  onOpenChange: (open: boolean) => void;
+}>({
+  isOpen: false,
+  onOpenChange: () => {},
+});
+
+export const SheetTrigger = ({ children, asChild }: SheetTriggerProps) => {
+  const { onOpenChange } = React.useContext(SheetContext);
+  const Comp = asChild ? Slot : "button";
+
+  return (
+    <Comp onClick={() => onOpenChange(true)} type="button">
+      {children}
+    </Comp>
+  );
+};
+
+export const SheetContent = ({
+  children,
+  side = "right",
+  className,
+}: SheetContentProps) => {
+  const { isOpen, onOpenChange } = React.useContext(SheetContext);
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      <div className={styles.overlay} onClick={() => onOpenChange(false)} />
+      <div className={cn(styles.content, styles[`side-${side}`], className)}>
+        <button
+          className={styles.close}
+          onClick={() => onOpenChange(false)}
+          type="button"
+        >
+          <CloseIcon className={styles.closeIcon} />
+          <span className={styles.srOnly}>Close</span>
+        </button>
+        {children}
+      </div>
+    </>
+  );
+};
+
+export const SheetHeader = ({ children, className }: SheetHeaderProps) => (
+  <div className={cn(styles.header, className)}>{children}</div>
+);
+
+export const SheetFooter = ({ children, className }: SheetFooterProps) => (
+  <div className={cn(styles.footer, className)}>{children}</div>
+);
+
+export const SheetTitle = ({ children, className }: SheetTitleProps) => (
+  <h2 className={cn(styles.title, className)}>{children}</h2>
+);
+
+export const SheetDescription = ({
+  children,
+  className,
+}: SheetDescriptionProps) => (
+  <p className={cn(styles.description, className)}>{children}</p>
+);

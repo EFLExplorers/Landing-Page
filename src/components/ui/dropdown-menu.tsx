@@ -2,7 +2,8 @@
 
 import * as React from "react";
 import { ChevronRightIcon } from "./icons";
-import styles from "./dropdown-menu.module.css";
+import { cn } from "@/lib/utils";
+import styles from "./styles/dropdown-menu.module.css";
 
 interface DropdownMenuProps {
   children: React.ReactNode;
